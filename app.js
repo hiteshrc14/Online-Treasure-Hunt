@@ -44,10 +44,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 var dbOptions = {
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'treasure_hunt'
+  host: 'us-cdbr-iron-east-01.cleardb.net',
+  user: 'be6c227db4c5d1',
+  password: 'd52f4627',
+  database: 'heroku_b7d65f1bd717886'
 };
 app.use(myConnection(mysql, dbOptions, 'single'));
 
