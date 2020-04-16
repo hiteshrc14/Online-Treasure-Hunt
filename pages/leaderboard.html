@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <link rel="shortcut icon" href="../images/milagro.ico">
+  <title>Online Treasure Hunt</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="../css/agency.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top" style="background-color: black;" onload="leaderFunc()" >
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="../index.html"><span><img src="../images/head.png" id="headImg" style="width:12.5%;padding:0.25%"></span>Online Treasure Hunt</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#">Leaderboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" onclick="document.getElementById('login-form').style.display='block'" id="login">LogIn</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" onclick="document.getElementById('signup-form').style.display='block'" id="signup">SignUp</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" onclick="logout()" style="display:none;" id="logout">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="./puzzles.html" style="display:none;" id="continue">Continue</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!--leaderboard-->
+  <div align="center" id="leaderboard">
+    <br>
+	  	<img src="../images/lead.png" style="width:15%;">
+		<br>
+   <center>
+	<b style="font-size: 150%;color:#fed136;">LEADERBOARD</b>
+   </center>
+   <br><br><br>
+   <div>
+     <center>
+       <h5 id="myRank" style="display: none;padding-bottom: 5%;">Rank = </h5>
+     </center>
+   </div>
+   <center>
+    <div id="demo" style="background-color:black;background: rgba(0,0,0,.5);">
+    </div>
+   </center>
+   <br>
+  
+</div>
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="container" style="color:#fed136;">
+      <div class="row">
+        <div class="col-md-12">
+          <span class="copyright">Copyright &copy; Milagro 2019</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="login-form" class="modal"> 
+      <form class="modal-content animate" >     
+        <div class="container" style="color: white;"> 
+          <center><label style="font-size:150%;color:#fed136;"><b>LOGIN FORM</b></label></center>
+          <label ><b>Username</b></label> 
+          <input style=" background-color: transparent;border: transparent;border-bottom: 1px solid white;color: white; " type="text" placeholder="Enter Username" name="userNameL" id ="userNameL" required> 
+        
+          <label ><b>Password</b></label>     
+         <input style=" background-color: transparent;border: transparent;border-bottom: 1px solid white;color: white; " type="password" placeholder="Enter Password" name="passwordL" id="passwordL"  required> 
+              
+          <button type="button" style="background-color: green;border: transparent;" onclick="loginFunc()" >Login</button> 
+        </div> 
+        <div class="container">
+            <label id="Lerror" style="color: #f44336;display: none;"></label>
+        </div>
+      <div class="container" style=" background-color: rgb(10, 10, 10)"> 
+          <button type="button" onclick="document.getElementById('login-form').style.display='none'" class="cancelbtn">Cancel</button> 
+          <!-- <span class="psw" style="color:white;">Forgot <a href="#">password?</a></span>  -->
+        </div> 
+      </form> 
+    </div> 
+      
+    
+  <div id="signup-form" class="modal" > 
+    <form class="modal-content animate" >     
+      <div class="container" style="color: white;"> 
+        <center><label style="font-size:150%;color:#fed136;"><b>SIGNUP FORM</b></label></center>
+        <label ><b>Username</b></label> 
+        <input style=" background-color: transparent;border: transparent;border-bottom: 1px solid white;color: white; " type="text" placeholder="Enter Username" name="userName" id ="userName" pattern ="^[a-zA-Z\s.]+.{3,}$" required> 
+      
+        <label ><b>Email Id</b></label> 
+        <input style=" background-color: transparent;border: transparent;border-bottom: 1px solid white;color: white; " type="text" placeholder="Enter Email Id" name="emailID" id="emailID"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required> 
+
+        <label ><b>Password</b></label>     
+        <input style=" background-color: transparent;border: transparent;border-bottom: 1px solid white; color: white;" type="password" placeholder="Enter Password" name="password" id="password" required> 
+         
+        <label ><b>Re-Enter Password</b></label>     
+       <input style=" background-color: transparent;border: transparent;border-bottom: 1px solid white;color: white; " type="password" placeholder="Re-Enter Password" name="rpwd" id="rpwd" required> 
+            
+        <button type="button" style="background-color: green;border: transparent;" onclick="signupFunc()">SignUp</button> 
+        <!-- <input type="checkbox"> Keep me signed in  --><br>
+        <label id="Serror" style="color: #f44336;display: none;"></label>
+      </div> 
+      <div class="container">
+          <label id="Serror" style="color: #f44336;display: none;"></label>
+      </div>
+      <div class="container" style=" background-color: rgb(10, 10, 10);"> 
+        <button type="button" onclick="document.getElementById('signup-form').style.display='none'" class="cancelbtn">Cancel</button> 
+      </div> 
+    </form> 
+  </div> 
+    
+    
+  <!-- <script> 
+    
+  var modal = document.getElementById('login-form'); 
+  window.onclick = function(event) { 
+      if (event.target == modal) { 
+          modal.style.display = "none"; 
+      } 
+  } 
+  </script>  -->
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact form JavaScript -->
+  <script src="../js/jqBootstrapValidation.js"></script>
+  <script src="../js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="../js/agency.min.js"></script>
+
+  <script>
+    
+    myStorage = window.localStorage;
+        //sign up
+  function signupFunc() {
+        uName=document.getElementById("userName").value;
+        email=document.getElementById("emailID").value;
+        pwd=document.getElementById("password").value;
+        rpwd=document.getElementById("rpwd").value;
+        if(uName == "" ||email == "" ||pwd == "" ||rpwd == "" ){
+          document.getElementById('Serror').innerHTML=" Fill in all the details correctly!";
+          document.getElementById('Serror').style.display='block';
+        }
+        else if(pwd!=rpwd){
+          document.getElementById('Serror').innerHTML="Password doesnt match!";
+          document.getElementById('Serror').style.display='block';
+        }
+        else{
+          var xhttp = new XMLHttpRequest();
+          var params = 'userName='+document.getElementById("userName").value+'&emailID='+document.getElementById("emailID").value+'&password='+document.getElementById("password").value;
+          // console.log(params);
+          xhttp.onreadystatechange = function() {
+            // console.log(this.responseText);
+            if (this.readyState == 4 && this.status == 200) {
+              var myObj = JSON.parse(this.responseText);
+              // console.log(myObj.Message);
+              // console.log(myObj.Code);
+              if(myObj.Code==1){
+                document.getElementById('signup-form').style.display='none';
+                document.getElementById('Serror').style.display='none';
+                document.getElementById('Serror').innerHTML= "";
+                // window.location.reload();
+              }
+              else{
+                document.getElementById('Serror').innerHTML= myObj.Message;
+                document.getElementById('Serror').style.display='block';
+
+              }            
+            }
+          };
+          xhttp.open("POST", "https://localhost:8080/user/add", true);
+          xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+          xhttp.send(params);
+        }
+    }
+   //login 
+   function loginFunc() {
+        uName=document.getElementById("userNameL").value;
+        pwd=document.getElementById("passwordL").value;
+        if(uName == "" ||pwd == ""  ){
+           document.getElementById('Lerror').innerHTML=" Fill in all the details correctly!";
+           document.getElementById('Lerror').style.display='block';
+        }
+        else{
+          var xhttp = new XMLHttpRequest();
+          var params = 'userName='+document.getElementById("userNameL").value+'&password='+document.getElementById("passwordL").value;
+          // console.log(params);
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              // console.log(this.responseText);
+              var myObj = JSON.parse(this.responseText);
+              // console.log(myObj.Document);
+              if(myObj.Document[0].count==1){
+                localStorage.setItem('authorization', "Bearer "+ myObj.Document[1]);
+                localStorage.setItem('User', myObj.Document[2].user);
+                localStorage.setItem('lastclear',(new Date()).getTime());
+                document.getElementById('login-form').style.display='none';
+                document.getElementById('login').style.display='none';
+                document.getElementById('signup').style.display='none';
+                document.getElementById('logout').style.display='block';
+                document.getElementById('Lerror').innerHTML="";
+                document.getElementById('Lerror').style.display='none';
+                window.location.reload();
+              }
+              else{
+                document.getElementById('Lerror').innerHTML="Username or Password is wrong!";
+                document.getElementById('Lerror').style.display='block';
+              }
+
+            }
+          };
+          xhttp.open("GET", "https://localhost:8080/user/login?"+params, true);
+          // xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+          xhttp.send();
+        }
+    }
+//things to be called on page load
+    window.onload =function validToken(){
+      // import jwt_decode from 'jwt-decode';
+      leaderFunc();
+      var token = localStorage.getItem("User");
+      // var decoded = jwt_decode(token);
+      // console.log(token);
+      if(token!=null)
+      {
+          document.getElementById('login').style.display='none';
+          document.getElementById('signup').style.display='none';
+          document.getElementById('logout').style.display='block'; 
+          document.getElementById('continue').style.display='block'; 
+          document.getElementById('myRank').style.display='block';
+
+          var time_now=(new Date()).getTime();
+          var time_then=localStorage.getItem('lastclear');
+          // console.log(time_then+"  "+time_now);
+          if ((time_now - time_then) > 1000 * 60 * 60 * 24) {
+              logout();
+            }
+
+      }        
+    }
+
+
+    function logout(){
+      localStorage.clear();
+      window.location.href="#";
+      window.location.reload();
+      document.getElementById('logout').style.display='none'; 
+      document.getElementById('continue').style.display='none'; 
+      document.getElementById('login').style.display='block';
+      document.getElementById('signup').style.display='block';
+    }
+
+//leaderboard
+function leaderFunc(){
+      var rank=1,x,txt="";
+     var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              // console.log(this.responseText);
+              var myObj = JSON.parse(this.responseText);
+              // console.log(myObj.Document.length);
+              txt += ' <table style="width: 60%;;margin-left: 10%;"> <tr><th >Rank</th><th colspan="4">Username</th><th>Points</th></tr>'
+              for (x=0;x<myObj.Document.length;x++) {
+                if(myObj.Document[x].userName==localStorage.getItem('User')){
+                  document.getElementById('myRank').innerHTML='My Rank = '+ rank;
+               
+                  txt += "<tr style='border-color:#fed136;; border-style: solid;'><td>" + (rank++) + "</td><td colspan='4'>" + myObj.Document[x].userName + "</td><td>" + myObj.Document[x].currentQuestion + "</td></tr>";
+              // console.log(myObj.Document[x].userName);
+                }
+                else
+                  txt += "<tr><td>" + (rank++) + "</td><td colspan='4'>" + myObj.Document[x].userName + "</td><td>" + myObj.Document[x].currentQuestion + "</td></tr>";
+              }
+              txt += "</table>"    
+              document.getElementById("demo").innerHTML = txt;
+      
+            }
+          };
+          xhttp.open("GET", "https://localhost:8080/user/get", true);
+          xhttp.send();
+    }
+  </script>
+
+<style> 
+
+
+
+input[type=text], input[type=password] { 
+    width: 100%; 
+    padding: 12px 20px; 
+    margin: 8px 0; 
+    display: inline-block; 
+    box-sizing: border-box; 
+} 
+  
+  
+.cancelbtn { 
+    width: auto; 
+    padding: 10px 18px; 
+    background-color: #f44336; 
+    border: transparent;
+} 
+  
+  
+.imgcontainer { 
+    text-align: center; 
+    margin: 24px 0 12px 0; 
+    position: relative; 
+} 
+  
+img.avatar { 
+    width: 40%; 
+    border-radius: 50%; 
+} 
+  
+.container { 
+    padding: 16px; 
+} 
+  
+span.psw { 
+    float: right; 
+    padding-top: 16px; 
+} 
+  
+  
+.modal { 
+    display: none;  
+    position: fixed; 
+    z-index: 1;  
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    height: 100%; 
+    overflow: auto;  
+    background-color: rgba(44, 44, 44,0.5); 
+    padding-top: 60px; 
+    z-index: 99999;
+} 
+  
+  
+.modal-content { 
+    background-color: rgb(10, 10, 10);
+    margin: 5% auto 15% auto;   
+    width: 80%;  
+} 
+  
+.close { 
+    position: absolute; 
+    right: 25px; 
+    top: 0; 
+    color: #fed136; 
+    font-size: 35px; 
+    font-weight: bold; 
+} 
+  
+.close:hover, 
+.close:focus { 
+    color: red; 
+    cursor: pointer; 
+} 
+  
+.animate { 
+    -webkit-animation: animatezoom 0.6s; 
+    animation: animatezoom 0.6s 
+} 
+  
+@-webkit-keyframes animatezoom { 
+    from {-webkit-transform: scale(0)}  
+    to {-webkit-transform: scale(1)} 
+} 
+    @keyframes animatezoom { 
+    from {transform: scale(0)}  
+    to {transform: scale(1)} 
+} 
+@media screen and (max-width: 300px) { 
+    span.psw { 
+       display: block; 
+       float: none; 
+    } 
+    .cancelbtn { 
+       width: 100%; 
+    } 
+} 
+#leaderboard{
+        margin-top:15%;
+        color:white;
+        width: 100%;
+    }
+@media screen and (max-width: 500px) { 
+    #leaderboard{
+        margin-top:20%;
+        color:white;
+        width: 100%;
+    }
+}
+table {
+    border-collapse: collapse;
+}
+
+td {
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+}
+@media screen and (max-width: 400px) { 
+  #headImg{
+    display: none;
+  }
+}
+</style> 
+</body>
+
+</html>

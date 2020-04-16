@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <link rel="shortcut icon" href="./images/milagro.ico">
+  <title>Online Treasure Hunt</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="css/agency.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top" style="background-color: black;">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top"><span><img src="./images/head.png" id="headImg" style="width:12.5%;padding:0.25%;"></span>Online Treasure Hunt</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="./pages/leaderboard.html">Leaderboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" onclick="document.getElementById('login-form').style.display='block'" id="login">LogIn</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" onclick="document.getElementById('signup-form').style.display='block'" id="signup">SignUp</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" onclick="logout()" style="display:none;" id="logout">Logout</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="./pages/puzzles.html" style="display:none;" id="continue">Continue</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="masthead">
+    <div class="container">
+      <div class="intro-text">
+        <div class="intro-lead-in">Welcome To Our Online Treasure Hunt!</div>
+        <div class="intro-heading text-uppercase" id="text1">It's Nice To Meet You</div>
+        <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#rules">Rules</a>
+      </div>
+    </div>
+  </header>
+
+  
+
+
+  <!-- Rules -->
+  <section id="rules">
+    <div class="container" style="color:whitesmoke;" >
+      <div class="row">
+        <div class="col-lg-12 text-center" >
+          <h2 class="section-heading text-uppercase" style="border-color:#fed136;border-width: 1px;">Rules</h2>
+          <!-- <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3> -->
+        </div>
+      </div>
+	  <br>
+      <ol >
+        <li>Each correct answer, will earn you 1 point.</li>
+        <li>The first individual to reach 55 points or the person with highest points at the end of 2 days wins the contest.</li>
+        <li>Questions might be added based on the requirement.</li>
+        <li>Organisers decision is final.</li>
+        <li>Please use your official name while registering to claim the goodies in case you win. </li>
+        <li>Answers shouldnt contain any spaces. </li>
+        <li>Answers shouldnt contain any special character. </li>
+        <li>The questions range over the theme of the fest. Few questions might tickle your brain, but do not give up!</li>
+        <li>There is a right and a wrong in the universe and that distinction is not hard to make!- Superman</li>
+      </ol>
+	  <br>
+      <div align="center">
+      <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" onclick="getStarted()">Get Started</a>
+      </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="container" style="color:#fed136;">
+      <div class="row">
+        <div class="col-md-12">
+          <span class="copyright">Copyright &copy; Milagro 2019</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="login-form" class="modal"> 
+    <form class="modal-content animate" >     
+      <div class="container" style="color: white;"> 
+        <center><label style="font-size:150%;color:#fed136;"><b>LOGIN FORM</b></label></center>
+        <label ><b>Username</b></label> 
+        <input style=" background-color: transparent;border: transparent;border-bottom: 1px solid white;color: white; " type="text" placeholder="Enter Username" name="userNameL" id ="userNameL" required> 
+      
+        <label ><b>Password</b></label>     
+       <input style=" background-color: transparent;border: transparent;border-bottom: 1px solid white;color: white; " type="password" placeholder="Enter Password" name="passwordL" id="passwordL"  required> 
+            
+        <button type="button" style="background-color: green;border: transparent;" onclick="loginFunc()" >Login</button> 
+      </div> 
+      <div class="container">
+          <label id="Lerror" style="color: #f44336;display: none;"></label>
+      </div>
+    <div class="container" style=" background-color: rgb(10, 10, 10)"> 
+        <button type="button" onclick="document.getElementById('login-form').style.display='none'" class="cancelbtn">Cancel</button> 
+        <!-- <span class="psw" style="color:white;">Forgot <a href="#">password?</a></span>  -->
+      </div> 
+    </form> 
+  </div> 
+    
+  <div id="signup-form" class="modal" > 
+    <form class="modal-content animate" >     
+      <div class="container" style="color: white;"> 
+        <center><label style="font-size:150%;color:#fed136;"><b>SIGNUP FORM</b></label></center>
+        <label ><b>Username</b></label> 
+        <input style=" background-color: transparent;border: transparent;border-bottom: 1px solid white;color: white; " type="text" placeholder="Enter Username" name="userName" id ="userName" pattern ="^[a-zA-Z\s.]+.{3,}$" required> 
+      
+        <label ><b>Email Id</b></label> 
+        <input style=" background-color: transparent;border: transparent;border-bottom: 1px solid white;color: white; " type="text" placeholder="Enter Email Id" name="emailID" id="emailID"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required> 
+
+        <label ><b>Password</b></label>     
+        <input style=" background-color: transparent;border: transparent;border-bottom: 1px solid white; color: white;" type="password" placeholder="Enter Password" name="password" id="password" required> 
+         
+        <label ><b>Re-Enter Password</b></label>     
+       <input style=" background-color: transparent;border: transparent;border-bottom: 1px solid white;color: white; " type="password" placeholder="Re-Enter Password" name="rpwd" id="rpwd" required> 
+            
+        <button type="button" style="background-color: green;border: transparent;" onclick="signupFunc()">SignUp</button> 
+        <!-- <input type="checkbox"> Keep me signed in  -->
+      </div> 
+      <div class="container">
+          <label id="Serror" style="color: #f44336;display: none;"></label>
+      </div>
+      <div class="container" style=" background-color: rgb(10, 10, 10);"> 
+        <button type="button" onclick="document.getElementById('signup-form').style.display='none'" class="cancelbtn">Cancel</button> 
+      </div> 
+    </form> 
+  </div> 
+    
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact form JavaScript -->
+  <script src="js/jqBootstrapValidation.js"></script>
+  <script src="js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/agency.min.js"></script>
+  <script>
+
+  myStorage = window.localStorage;
+    //sign up
+  function signupFunc() {
+        //get the username,email id , password and retyped password values
+        uName=document.getElementById("userName").value;
+        email=document.getElementById("emailID").value;
+        pwd=document.getElementById("password").value;
+        rpwd=document.getElementById("rpwd").value;
+
+        //validating the fields
+        if(uName == "" ||email == "" ||pwd == "" ||rpwd == "" ){  //checking if the user hasnt filled any one value
+          document.getElementById('Serror').innerHTML=" Fill in all the details correctly!";
+          document.getElementById('Serror').style.display='block';
+        }
+        else if(pwd!=rpwd){ //checking if password matches the retyped password
+          document.getElementById('Serror').innerHTML="Password doesnt match!";
+          document.getElementById('Serror').style.display='block';
+        }
+        // if the validation is successful
+        else{
+
+          //creating a http requesr to add the user
+          var xhttp = new XMLHttpRequest();
+          //list of parameters to be passed in the body
+          var params = 'userName='+document.getElementById("userName").value+'&emailID='+document.getElementById("emailID").value+'&password='+document.getElementById("password").value;
+          xhttp.onreadystatechange = function() {
+            //if there is no error in creating a http request
+            if (this.readyState == 4 && this.status == 200) {
+              var myObj = JSON.parse(this.responseText);
+              if(myObj.Code==1){  //checking if adding a person into the db is a success, if success we empty the contents and reload the page
+                document.getElementById('signup-form').style.display='none';
+                document.getElementById('Serror').style.display='none';
+                document.getElementById('Serror').innerHTML= "";
+                window.location.reload();
+              }
+              else{ //if its a failure we dispaly the error message
+                document.getElementById('Serror').innerHTML= myObj.Message;
+                document.getElementById('Serror').style.display='block';
+
+              }            
+            }
+          };
+          xhttp.open("POST", "https://localhost:8080/user/add", true);  // requested REST api
+          xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+          xhttp.send(params); // api body
+        }
+    }
+
+    //login 
+    function loginFunc() {
+        uName=document.getElementById("userNameL").value;
+        pwd=document.getElementById("passwordL").value;
+        //validating the parameters
+        if(uName == "" ||pwd == ""  ){    //check both the fields are filled
+           document.getElementById('Lerror').innerHTML=" Fill in all the details correctly!";
+           document.getElementById('Lerror').style.display='block';
+        }
+        else{ // if both fields are filled, we check if a user with that username and that password exists
+          var xhttp = new XMLHttpRequest(); // creating a HTTP request
+          var params = 'userName='+document.getElementById("userNameL").value+'&password='+document.getElementById("passwordL").value;  //paramters to be passed 
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              var myObj = JSON.parse(this.responseText);    //we parse the JSON response we get
+              if(myObj.Document[0].count==1){   // if user exists
+                // we save the user properties in the local storage to keep him logged in
+                localStorage.setItem('authorization', "Bearer "+ myObj.Document[1]);  
+                localStorage.setItem('User', myObj.Document[2].user);
+                localStorage.setItem('lastclear',(new Date()).getTime());
+                //if success we empty the contents and reload the page
+                document.getElementById('login-form').style.display='none';
+                document.getElementById('login').style.display='none';
+                document.getElementById('signup').style.display='none';
+                document.getElementById('logout').style.display='block';
+                document.getElementById('Lerror').innerHTML="";
+                document.getElementById('Lerror').style.display='none';
+                window.location.reload();
+              }
+              else{
+                // if user doesnt exist, either the username or the password is wrong
+                document.getElementById('Lerror').innerHTML="Username or Password is wrong!";
+                document.getElementById('Lerror').style.display='block';
+              }
+
+            }
+          };
+          xhttp.open("GET", "https://localhost:8080/user/login?"+params, true);
+          xhttp.send();
+        }
+    }
+
+//things to be called on page load
+    window.onload =function validToken(){
+      // import jwt_decode from 'jwt-decode';
+      var token = localStorage.getItem("User");
+      // var decoded = jwt_decode(token);
+
+      // if token value is not null, user is logged in
+      if(token!=null)
+      {
+          document.getElementById('text1').innerHTML="Hey "+token+"!";
+          document.getElementById('login').style.display='none';
+          document.getElementById('signup').style.display='none';
+          document.getElementById('logout').style.display='block'; 
+          document.getElementById('continue').style.display='block'; 
+
+          var time_now=(new Date()).getTime();
+          var time_then=localStorage.getItem('lastclear');
+          // if user is logged in for more than a day, we log him out by clearing all stored details
+          if ((time_now - time_then) > 1000 * 60 * 60 * 24) {
+              logout();
+            }
+
+      }        
+    }
+
+    function logout(){
+      localStorage.clear(); //clearing all the user properties
+      window.location.href="#";
+      window.location.reload();
+      document.getElementById('logout').style.display='none'; 
+      document.getElementById('continue').style.display='none'; 
+      document.getElementById('login').style.display='block';
+      document.getElementById('signup').style.display='block';
+    }
+
+
+    //get started
+    function getStarted(){
+      var token = localStorage.getItem("User");
+      // var decoded = jwt_decode(token);
+      // console.log(token);
+      if(token!=null){
+        //is a user is loged him, we let him access the puzzles page, else we ask him to login
+        window.location.href = "pages/puzzles.html";  
+      }
+      else{
+        document.getElementById('login-form').style.display='block'; 
+        alert("Please login to continue!") 
+      }
+       
+    }
+
+  </script>
+  
+
+<style> 
+  
+
+input[type=text], input[type=password] { 
+    width: 100%; 
+    padding: 12px 20px; 
+    margin: 8px 0; 
+    display: inline-block; 
+    box-sizing: border-box; 
+} 
+  
+  
+.cancelbtn { 
+    width: auto; 
+    padding: 10px 18px; 
+    background-color: #f44336; 
+    border: transparent;
+} 
+  
+  
+.imgcontainer { 
+    text-align: center; 
+    margin: 24px 0 12px 0; 
+    position: relative; 
+} 
+  
+img.avatar { 
+    width: 40%; 
+    border-radius: 50%; 
+} 
+  
+.container { 
+    padding: 16px; 
+} 
+  
+span.psw { 
+    float: right; 
+    padding-top: 16px; 
+} 
+  
+  
+.modal { 
+    display: none;  
+    position: fixed; 
+    z-index: 1;  
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    height: 100%; 
+    overflow: auto;  
+    background-color: rgba(44, 44, 44,0.5); 
+    padding-top: 60px; 
+    z-index: 99999;
+} 
+  
+  
+.modal-content { 
+    background-color: rgb(10, 10, 10);
+    margin: 5% auto 15% auto;   
+    width: 80%;  
+} 
+  
+.close { 
+    position: absolute; 
+    right: 25px; 
+    top: 0; 
+    color: #fed136; 
+    font-size: 35px; 
+    font-weight: bold; 
+} 
+  
+.close:hover, 
+.close:focus { 
+    color: red; 
+    cursor: pointer; 
+} 
+  
+.animate { 
+    -webkit-animation: animatezoom 0.6s; 
+    animation: animatezoom 0.6s 
+} 
+  
+@-webkit-keyframes animatezoom { 
+    from {-webkit-transform: scale(0)}  
+    to {-webkit-transform: scale(1)} 
+} 
+    @keyframes animatezoom { 
+    from {transform: scale(0)}  
+    to {transform: scale(1)} 
+} 
+@media screen and (max-width: 300px) { 
+    span.psw { 
+       display: block; 
+       float: none; 
+    } 
+    .cancelbtn { 
+       width: 100%; 
+    } 
+} 
+
+@media screen and (max-width: 400px) { 
+  #headImg{
+    display: none;
+  }
+}
+</style> 
+</body>
+
+</html>

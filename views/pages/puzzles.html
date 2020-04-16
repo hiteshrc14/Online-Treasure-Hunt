@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <link rel="shortcut icon" href="../images/milagro.ico">
+  <title>Online Treasure Hunt</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="../css/agency.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top" style="background-color: black;" onload="leaderFunc()">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+       <a class="navbar-brand js-scroll-trigger" href="../index.html"><span><img src="../images/head.png" id="headImg" style="width:12.5%;padding:0.25%"></span>Online Treasure Hunt</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="./leaderboard.html">Leaderboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" onclick="logout()" style="display:none;" id="logout">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#" style="display:none;" id="continue">Continue</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!--Puzzles-->
+  <div align="center" id="puzzles">
+    <br>
+   <center><b style="font-size: 150%;color:#fed136;">Puzzles</b></center><br><br>
+   <center>
+    <div id="demo">
+
+    </div>
+   </center>
+   <br>
+</div>
+
+
+    <div align="center">
+        <img  alt="Question" id="question" >
+        <br><br><br>
+        <input style=" background-color: transparent;border: transparent;border-bottom: 1px solid white;color: white; " type="text" placeholder="Answer?" name="answer" id ="answer" required> 
+        <br>
+        <label id="wrongAnswer" style="color: #f44336;display: none;">Wrong Answer, Try Again!</label>
+        <br>
+        <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" onclick="correctAns()" id="submit">Submit</a>
+    </div>
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="container" style="color:#fed136;">
+      <div class="row">
+        <div class="col-md-12">
+          <span class="copyright">Copyright &copy; Milagro 2019</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+    
+  <!-- <script> 
+    
+  var modal = document.getElementById('login-form'); 
+  window.onclick = function(event) { 
+      if (event.target == modal) { 
+          modal.style.display = "none"; 
+      } 
+  } 
+  </script>  -->
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact form JavaScript -->
+  <script src="../js/jqBootstrapValidation.js"></script>
+  <script src="../js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="../js/agency.min.js"></script>
+
+  <script>
+    
+    var myStorage = window.localStorage;
+    var currentQuestionNumber;   
+ 
+
+    //things to be called on page load
+    window.onload =function validToken(){
+      // import jwt_decode from 'jwt-decode';
+      puzzle();
+      var token = localStorage.getItem("User");
+      // var decoded = jwt_decode(token);
+      // console.log(token);
+      if(token!=null)
+      {
+          document.getElementById('logout').style.display='block'; 
+          document.getElementById('continue').style.display='block'; 
+
+          var time_now=(new Date()).getTime();
+          var time_then=localStorage.getItem('lastclear');
+          // console.log(time_then+"  "+time_now);
+          if ((time_now - time_then) > 1000 * 60 * 60 * 24) {
+              logout();
+            }
+
+      }        
+    }
+
+
+    function logout(){
+      localStorage.clear();
+      window.location="../index.html";
+      document.getElementById('logout').style.display='none'; 
+      document.getElementById('continue').style.display='none'; 
+      document.getElementById('login').style.display='block';
+      document.getElementById('signup').style.display='block';
+    }
+
+
+    //which image should be displayed
+    function puzzle(){
+          var xhttp = new XMLHttpRequest();
+          var params = 'userName="'+localStorage.getItem('User')+'"';
+          // console.log(params);
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              // console.log(this.responseText);
+              var myObj = JSON.parse(this.responseText);
+              if(myObj.Document[0].currentQuestion == 1)
+                document.getElementById("question").src="../images/question1.png";
+              else if(myObj.Document[0].currentQuestion == 2)
+                document.getElementById("question").src="../images/question2.png";
+              else if(myObj.Document[0].currentQuestion == 3)
+                document.getElementById("question").src="../images/question3.jpg";
+              else if(myObj.Document[0].currentQuestion == 4)
+                document.getElementById("question").src="../images/question4.jpg";
+              else if(myObj.Document[0].currentQuestion == 5)
+                document.getElementById("question").src="../images/question5.png";
+              else if(myObj.Document[0].currentQuestion == 6)
+                document.getElementById("question").src="../images/question6.png";
+              else if(myObj.Document[0].currentQuestion == 7)
+                document.getElementById("question").src="../images/question7.png";
+              else if(myObj.Document[0].currentQuestion == 8)
+                document.getElementById("question").src="../images/question8.png";
+              else if(myObj.Document[0].currentQuestion == 9)
+                document.getElementById("question").src="../images/question9.png";
+              else if(myObj.Document[0].currentQuestion == 10)
+                document.getElementById("question").src="../images/question10.jpg";
+              else if(myObj.Document[0].currentQuestion == 11)
+                document.getElementById("question").src="../images/question11.png";
+              else if(myObj.Document[0].currentQuestion == 12)
+                document.getElementById("question").src="../images/question12.jpg";
+              else if(myObj.Document[0].currentQuestion == 13)
+                document.getElementById("question").src="../images/question13.jpg";
+              else if(myObj.Document[0].currentQuestion == 14)
+                document.getElementById("question").src="../images/question14.png";
+              else if(myObj.Document[0].currentQuestion == 15)
+                document.getElementById("question").src="../images/question15.jpg";
+              else if(myObj.Document[0].currentQuestion == 16)
+                document.getElementById("question").src="../images/question16.png";
+              else if(myObj.Document[0].currentQuestion == 17)
+                document.getElementById("question").src="../images/question17.jpg";
+              else if(myObj.Document[0].currentQuestion == 18)
+                document.getElementById("question").src="../images/question18.jpg";
+                else if(myObj.Document[0].currentQuestion == 19)
+                document.getElementById("question").src="../images/question19.jpg";
+              else if(myObj.Document[0].currentQuestion == 20)
+                document.getElementById("question").src="../images/question20.jpg";
+              else if(myObj.Document[0].currentQuestion == 21)
+                document.getElementById("question").src="../images/question21.png";
+              else if(myObj.Document[0].currentQuestion == 22)
+                document.getElementById("question").src="../images/question22.jpg";
+              else if(myObj.Document[0].currentQuestion == 23)
+                document.getElementById("question").src="../images/question23.jpg";
+              else if(myObj.Document[0].currentQuestion == 24)
+                document.getElementById("question").src="../images/question24.jpg";
+              else if(myObj.Document[0].currentQuestion == 25)
+                document.getElementById("question").src="../images/question25.jpg";
+              else if(myObj.Document[0].currentQuestion == 26)
+                document.getElementById("question").src="../images/question26.jpeg";
+              else if(myObj.Document[0].currentQuestion == 27)
+                document.getElementById("question").src="../images/question27.jpg";
+              else if(myObj.Document[0].currentQuestion == 28)
+                document.getElementById("question").src="../images/question28.jpg";
+              else if(myObj.Document[0].currentQuestion == 29)
+                document.getElementById("question").src="../images/question29.jpg";
+              else if(myObj.Document[0].currentQuestion == 30)
+                document.getElementById("question").src="../images/question30.jpg";
+              else if(myObj.Document[0].currentQuestion == 31)
+                document.getElementById("question").src="../images/question31.jpg";
+              else if(myObj.Document[0].currentQuestion == 32)
+                document.getElementById("question").src="../images/question32.jpg";
+              else if(myObj.Document[0].currentQuestion == 33)
+                document.getElementById("question").src="../images/question33.jpg";
+              else if(myObj.Document[0].currentQuestion == 34)
+                document.getElementById("question").src="../images/question34.jpg";
+              else if(myObj.Document[0].currentQuestion == 35)
+                document.getElementById("question").src="../images/question35.jpg";
+              else if(myObj.Document[0].currentQuestion == 36)
+                document.getElementById("question").src="../images/question36.jpg";
+              else if(myObj.Document[0].currentQuestion == 37)
+                document.getElementById("question").src="../images/question37.png";
+              else if(myObj.Document[0].currentQuestion == 38)
+                document.getElementById("question").src="../images/question38.jpg";
+                else if(myObj.Document[0].currentQuestion == 39)
+                document.getElementById("question").src="../images/question39.jpg";
+              else if(myObj.Document[0].currentQuestion == 40)
+                document.getElementById("question").src="../images/question40.png";
+                else if(myObj.Document[0].currentQuestion == 41)
+                document.getElementById("question").src="../images/question41.jpg";
+              else if(myObj.Document[0].currentQuestion == 42)
+                document.getElementById("question").src="../images/question42.png";
+              else if(myObj.Document[0].currentQuestion == 43)
+                document.getElementById("question").src="../images/question43.png";
+              else if(myObj.Document[0].currentQuestion == 44)
+                document.getElementById("question").src="../images/question44.jpg";
+              else if(myObj.Document[0].currentQuestion == 45)
+                document.getElementById("question").src="../images/question45.png";
+              else if(myObj.Document[0].currentQuestion == 46)
+                document.getElementById("question").src="../images/question46.png";
+              else if(myObj.Document[0].currentQuestion == 47)
+                document.getElementById("question").src="../images/question47.jpg";
+              else if(myObj.Document[0].currentQuestion == 48)
+                document.getElementById("question").src="../images/question48.jpg";
+                else if(myObj.Document[0].currentQuestion == 49)
+                document.getElementById("question").src="../images/question49.png";
+              else if(myObj.Document[0].currentQuestion == 50)
+                document.getElementById("question").src="../images/question50.jpg";
+                else if(myObj.Document[0].currentQuestion == 51)
+                document.getElementById("question").src="../images/question51.jpg";
+              else if(myObj.Document[0].currentQuestion == 52)
+                document.getElementById("question").src="../images/question52.jpg";
+              else if(myObj.Document[0].currentQuestion == 53)
+                document.getElementById("question").src="../images/question53.jpg";
+              else if(myObj.Document[0].currentQuestion == 54)
+                document.getElementById("question").src="../images/question54.jpg";
+              else if(myObj.Document[0].currentQuestion == 55)
+                document.getElementById("question").src="../images/question55.png";
+              else{
+                document.getElementById("question").src="../images/end.jpg"; 
+                document.getElementById("answer").style.display='none'; 
+                document.getElementById("submit").style.display='none'; 
+
+              }               
+                currentQuestionNumber = myObj.Document[0].currentQuestion;
+              // console.log(myObj.Document[0].count);
+
+            }
+          };
+          xhttp.open("GET", "https://hitesh-online-hunt.herokuapp.com/user/question/number?"+params, true);
+          // xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+          xhttp.send();
+    }
+    
+    //api to check if the answer is correct
+    function correctAns() {
+        // console.log(localStorage.getItem('authorization'));
+          var xhttp = new XMLHttpRequest();
+          var params = 'userName='+localStorage.getItem('User')+'&currentQuestion='+currentQuestionNumber+'&answer='+document.getElementById("answer").value;
+          // console.log(params);
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              //  console.log(this.responseText);
+              var myObj = JSON.parse(this.responseText);
+                if(myObj.Document=="") 
+                   document.getElementById("wrongAnswer").style.display='block'; 
+                else{
+                   window.location.reload();
+                   document.getElementById("wrongAnswer").style.display='none'; 
+                }
+                
+            }
+          };
+          xhttp.open("POST", "https://hitesh-online-hunt.herokuapp.com/user/current/question", true);
+          xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+          xhttp.setRequestHeader('authorization', localStorage.getItem('authorization'));
+
+          xhttp.send(params);
+    }
+
+  </script>
+
+<style> 
+#puzzles{
+        margin-top:15%;
+        color:white;
+        width: 100%;
+    }
+#question{
+    width:50%;
+    height: 50%;
+}
+@media screen and (max-width: 500px) { 
+    #puzzles{
+        margin-top:20%;
+        color:white;
+        width: 100%;
+    }
+    #question{
+    width:50%;
+    height: 50%;
+}
+}
+@media screen and (max-width: 400px) { 
+  #headImg{
+    display: none;
+  }
+}
+</style> 
+</body>
+
+</html>
