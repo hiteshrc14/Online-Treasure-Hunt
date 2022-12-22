@@ -11,7 +11,7 @@
     "express": "^4.16.4",
     "express-myconnection": "^1.0.4",
     "http-errors": "~1.6.2",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "md5": "^2.2.1",
     "morgan": "~1.9.0",
     "my-sql": "^1.2.15",
